@@ -145,7 +145,7 @@ astro-diffusion/
 
 ```bash
 # 1. Clone the repository
-git clone [https://github.com/YOUR_USERNAME/astro-diffusion.git](https://github.com/YOUR_USERNAME/astro-diffusion.git)
+git clone [https://github.com/Tomar-Ashish-Singh/MLSCI.git](https://github.com/Tomar-Ashish-Singh/MLSCI.git)
 cd astro-diffusion
 
 # 2. Set up virtual environment
