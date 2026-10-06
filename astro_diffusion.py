@@ -6,9 +6,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 
-# ==========================================
 # Configuration
-# ==========================================
+
 CONFIG = {
     "image_size": 32,
     "channels": 1,
@@ -22,9 +21,9 @@ CONFIG = {
     "device": "cuda" if torch.cuda.is_available() else "cpu"
 }
 
-# ==========================================
+
 # Synthetic Lens Simulation
-# ==========================================
+
 def make_mock_lenses(n_samples=800, size=32):
     """Generates synthetic 2D lensing images."""
     grid = torch.linspace(-1.0, 1.0, size)
@@ -55,9 +54,9 @@ def make_mock_lenses(n_samples=800, size=32):
 
     return images
 
-# ==========================================
+
 # DDPM Variance Schedule
-# ==========================================
+
 class DDPM:
     def __init__(self, timesteps=200, beta_start=1e-4, beta_end=0.02, device="cpu"):
         self.timesteps = timesteps
@@ -76,9 +75,9 @@ class DDPM:
         s_one_minus_alpha = self.sqrt_one_minus_alpha_hat[t].view(-1, 1, 1, 1)
         return s_alpha * x0 + s_one_minus_alpha * noise
 
-# ==========================================
+
 # U-Net Architecture
-# ==========================================
+
 class SinusoidalEmbedding(nn.Module):
     def __init__(self, dim):
         super().__init__()
@@ -131,9 +130,9 @@ class LensUNet(nn.Module):
         u2 = self.conv_up2(torch.cat([self.up2(u1), x1], dim=1), t_emb)
         return self.out(u2)
 
-# ==========================================
+
 # Sampling Function
-# ==========================================
+
 @torch.no_grad()
 def p_sample(model, ddpm, num_samples=4, img_size=32, device="cpu"):
     model.eval()
@@ -146,9 +145,9 @@ def p_sample(model, ddpm, num_samples=4, img_size=32, device="cpu"):
         else: x = mean
     return (x.clamp(-1.0, 1.0) + 1.0) / 2.0
 
-# ==========================================
+
 # Main Execution (Train & Evaluate)
-# ==========================================
+
 if __name__ == "__main__":
     device = torch.device(CONFIG["device"])
     print(f"Using device: {device}")
